@@ -1,0 +1,28 @@
+shell param test:
+executable shell file name: ./param.sh
+the first param: ./grep
+the second param: ./note.md
+the third param: ./str.sh
+the argc: 14
+show the argv with a wholeString: ./grep ./note.md ./str.sh ./cvar.sh ./arith.sh ./bool.sh ./var.sh ./go.sh ./fvar.sh ./comment.sh ./test.sh ./arr.sh ./relat.sh \.sh$
+show the argv with a singleString: ./grep ./note.md ./str.sh ./cvar.sh ./arith.sh ./bool.sh ./var.sh ./go.sh ./fvar.sh ./comment.sh ./test.sh ./arr.sh ./relat.sh \.sh$
+the current bash pid: 50804 0
+show: 569JNRXZghikm 0
+only in double quote,show difference:
+-- $* demo ---
+./grep ./note.md ./str.sh ./cvar.sh ./arith.sh ./bool.sh ./var.sh ./go.sh ./fvar.sh ./comment.sh ./test.sh ./arr.sh ./relat.sh \.sh$
+-- $@ demo ---
+./grep
+./note.md
+./str.sh
+./cvar.sh
+./arith.sh
+./bool.sh
+./var.sh
+./go.sh
+./fvar.sh
+./comment.sh
+./test.sh
+./arr.sh
+./relat.sh
+\.sh$

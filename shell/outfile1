@@ -1,0 +1,12 @@
+./param.sh
+./str.sh
+./cvar.sh
+./arith.sh
+./bool.sh
+./var.sh
+./go.sh
+./fvar.sh
+./comment.sh
+./test.sh
+./arr.sh
+./relat.sh

@@ -1,0 +1,241 @@
+#!/bin/bash
+
+echo "shell param test:"
+echo "executable shell file name: $0"
+echo "the first param: $1"
+echo "the second param: $2"
+echo "the third param: $3"
+echo "the argc: $#"
+echo "show the argv with a wholeString: $*"
+echo "show the argv with a singleString: $@"
+echo "the current bash pid: $$ $!"
+echo "show: $- $?"
+
+echo "only in double quote,show difference:"
+echo "-- \$* demo ---"
+for i in "$*";do
+	echo $i
+done
+
+
+echo "-- \$@ demo ---"
+for i in "$@";do
+	echo $i
+done
+#!/bin/bash
+str='This is a single quote string'
+echo $str
+str="This is a double quote string"
+echo $str
+str=This_is_a_no_quote_string # no space
+echo $str
+# use double quote cat
+str="{This is a cat string}"
+catstr="Hello,"$str"with double quote !"'+single quote' # no space
+echo $catstr
+catstr='Hello, ${str} with variable name in single quote !' # single quote is proto print
+echo $catstr
+catstr="Hello, $str with variable name in double quote !" # variable replace
+echo $catstr
+echo "print catstr length:" ${#catstr} # print string length
+#!/bin/bash
+# global d variable
+d=/apache.jail
+
+# User defined function
+create_jail(){
+	# d is only visible to this function
+	local d=$1
+	echo "create_jail(): d is set to $d"
+}
+
+echo "Before calling create_jail d is set to $d"
+
+create_jail "/home/apache/jail"
+
+echo "After calling create_jail d is set to $d"
+#!/bin/bash
+# Arithmetic Operators
+
+val=`expr 2 + 2` # space between expr1 and expr2
+echo "sum of 2 + 2 : $val"
+
+a=10
+b=20
+
+echo "expr \$a + \$b : `expr $a + $b`"
+echo "expr \$a - \$b : `expr $a - $b`"
+echo "expr \$a \* \$b : `expr $a \* $b`"
+echo "expr \$a / \$b : `expr $a / $b`"
+echo "expr \$b / \$a : `expr $b / $a`"
+echo "expr \$b % \$a : `expr $b % $a`"
+a=$b
+
+# equality operators: '==' '!=' ret true or false
+if [ $a == $b ] # space in '[' 'expr1' '==' 'expr2' ']'
+then
+	echo "a equel to b"
+fi
+
+if [ $a != $b ]
+then 
+	echo "a not equel to b"
+fi
+
+#!/bin/bash
+
+# Boolean Operators
+
+a=10
+b=20
+#if [ ! $a == $b ]
+#if [ ! $a -eq $b ]
+if test ! $a -eq $b
+then
+	echo "logical negation: $a != $b"
+else
+	echo "logical negation: $a == $b"
+fi
+
+#if [ $a -lt 100 -a $b -gt 15 ]
+#if [ $a -lt 100 ] && [ $b -gt 15 ]
+if [[ $a -lt 100 && $b -gt 15 ]]
+then
+	echo "$a is less than 100 and $b greater than 15: return true"
+else
+	echo "$a is less than 100 and $b greater than 15: return false"
+fi
+
+if [ $a -lt 100 -o $b -gt 100 ]
+then
+	echo "$a less than 100 or $b greater than 100: return true"
+else
+	echo "$a less than 100 or $b greater than 100: return false"
+fi
+
+if [ $a -lt 5 -o $b -gt 100 ]
+then
+	echo "$a less than 5 or $b greater than 100: return true"
+else
+	echo "$a less than 5 or $b greater than 100: return false"
+fi
+
+#!/bin/bash
+
+VAR="var test"
+echo "start:${VAR}:end"
+myUrl="https://www.google.com"
+readonly myUrl
+unset myUrl
+myUrl="https://www.baidu.com"
+find . | grep '\.sh$' | xargs cat | wc -l
+
+# $ find . > outfile0
+# $ grep '\.sh$' < outfile0 > outfile1
+# $ xargs cat < outfile1 > outfile2
+# $ wc -l < outfile2
+#!/bin/bash
+create_jail(){
+	d=$1
+	echo "create_jail(): d is set to $d"
+}
+
+d=/apache.jail
+
+echo "Before calling create_jail d is set to $d"
+
+create_jail "/home/apache/jail"
+
+echo "After calling create_jail d is set to $d"
+
+#!/bin/bash
+#----------------------------------
+# This is a comment
+# author: stefan
+# version: 1.0
+# date: 2022-03-29
+#----------------------------------
+
+# multiple line comment:
+:<<EOF
+echo "comment is fail"
+echo "comment is fail"
+echo "comment is fail"
+EOF
+
+
+echo "This is start"
+
+aaa="abc"
+
+# multiple line comment use other flag: ' ` ~ ! name
+:<<aaa
+echo "comment is fail"
+echo "comment is fail"
+echo "comment is fail"
+aaa
+
+echo "This is end"
+#!/bin/bash
+echo "Hello Shell!"
+#!/bin/bash
+array_name=(1 12 123) 	# define a array with 3 member
+echo $array_name[0]		# print the first member(X)
+echo ${array_name[0]}	# print the first member(V)
+array_name[1]=2112		# modified the menber
+echo ${array_name[1]}
+echo ${array_name[2]}
+echo ${array_name[@]}	# print all member
+
+echo ${#array_name[@]}	# count array length 
+echo ${#array_name[*]}	# count array length 
+echo ${#array_name[1]}	# count the first member length
+#!/bin/bash
+# Relational and Logical Operators
+
+a=10
+b=20
+
+if [ $a -eq $b ]
+then
+	echo "$a -eq $b : $a equal to $b"
+else
+	echo "$a -eq $b : $a not equal to $b"
+fi
+
+if [ $a -ne $b ]
+then
+	echo "$a -ne $b : $a not equal to $b"
+else
+	echo "$a -ne $b : $a equal to $b"
+fi
+
+if [ $a -gt $b ]
+then
+	echo "$a -gt $b : $a is greater than $b"
+else
+	echo "$a -gt $b : $a is not greater than $b"
+fi
+
+
+if [ $a -lt $b ]
+then
+	echo "$a -lt $b : $a is less than $b"
+else
+	echo "$a -lt $b : $a is not less than $b"
+fi
+
+if [ $a -ge $b ]
+then
+	echo "$a -ge $b : $a is greater than or equal to $b"
+else
+	echo "$a -ge $b : $a is not greater than or equal to $b"
+fi
+
+
+if [ $a -le $b ]
+then
+	echo "$a -le $b : $a is less than or equal to $b"
+else
+	echo "$a -le $b : $a is not less than or equal to $b"
+fi
