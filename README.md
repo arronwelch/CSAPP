@@ -1,3 +1,4 @@
-# CSAPP: Computer Systems: A Programmer's Perspective
-## NJU Computer Systems [Bilibili](https://www.bilibili.com/video/BV1qa4y1j7xk?spm_id_from=333.999.0.0)
-
+# [计算机系统基础习题课(2020秋季学期)](http://jyywiki.cn/ICS/2020/)
+```课程简介``` 大家在数字电路里都实现过“状态机“,例如一个计数器内部存储了数字x，每次按下开关执行 x <- (x+1) mod 3. 计算机系统基础这门课(以及实验部分)最重要的take-away message,就是告诉大家日常使用的计算机本质上也是这么一个状态机.在实验课中，我们也会用代码严谨地带大家理解这样的“状态机”的状态定义、状态转换，以及与外界的交互方式.实验课首先承担了大家对"系统编程"能力的训练，大家会熟悉Linux命令行工具的使用，在将命令行工具变成大家日常生活的一部分的同时，完成一系列的编程实验。   
+理解一个系统的最佳实践就是去实现它。因此在本课程的[PA部分](https://nju-projectn.github.io/ics-pa-gitbook/ics2020/),你将会在框架代码的基础上实现一个x86全系统模拟器NEMU，它不仅能运行各类测试程序，甚至还可以运行操作系统和“仙剑奇侠传”.模拟硬件的执行，自然就能深(痛)入(苦)理解计算机系统了。
+- [视频回放](https://www.bilibili.com/video/BV1qa4y1j7xk/)
