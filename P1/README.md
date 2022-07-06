@@ -114,7 +114,7 @@ gcc a.c -I. # include current path './'
 extern int printf (const char *__restrict __format, ...);
 
 int main(){
-#if aa == bb // null equal to null, like shell
+#if aa == bb // aa(null) equal to bb(null), like shell
 	printf("Yes\n");
 #else
 	printf("No\n");
@@ -125,6 +125,8 @@ int main(){
 $ gcc -E a.c
 $ vi $(fzf)
 ```
+宏定义与展开   
+P1-4:如何搞垮一个OJ系统,产生大量字符，占用OJ编译资源
 ```c
 #define A "a a a a a a a a"
 #define TEN(A) A A A A A A A A A A
@@ -135,17 +137,40 @@ $ vi $(fzf)
 #define F TEN(E)
 #define G TEN(F)
 
-// int main() { puts(G); }
+int main() { puts(G); }
 
-#define ARCH "x86-64"
+// #define ARCH "x86-64"
 
-int main() {
-	printf("The arch is " ARCH "\n");
-}
-
+// int main() {
+// 	printf("The arch is " ARCH "\n");
+// }
 ```
+P1-5:##纯文本拼接
+```c
+#define A sys ## tem
+int main(){
+	A("echo hello");
+}
+```
+P1-6:如何恶搞C程序:
+```c
+// #include <stdbool.h>
+#include <stdio.h>
+#define true (__LINE__ % 2 != 0)
 
-
+int main(){
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+	if (true) printf("yes %d\n", __LINE__);
+}
+```
 # "process < infile" or "> outfile"
 
 # linux shell
