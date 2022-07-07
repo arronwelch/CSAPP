@@ -171,7 +171,87 @@ int main(){
 	if (true) printf("yes %d\n", __LINE__);
 }
 ```
-# "process < infile" or "> outfile"
+P1-7:X-Macros   
+宏展开: 通过复制、粘贴改变代码的形态
+- 反复粘贴，直到没有宏可以展开为止
+例子：X-Macros
+```c
+#define NAMES(X) \
+	X(Tom) X(Jerry) X(Tyke) X(Spike)
+
+int main() {
+	#defien PRINT(x) puts("Hello, " #x "!");
+	NAMES(PRINT)
+
+	#defien PRINT1(x) puts("Goodbye, " #x "!");
+	NAMES(PRINT1)
+}
+```
+# 有趣的预编译
+发生在实际编译之前
+- 也称为元编程（meta programming)
+	- gcc的预处理器同样可以处理汇编代码
+	- C++中的模板元编程，Rust的macros; . . .   
+Pros   
+- 提供灵活的用法(X-macros)
+- 接近自然语言的写法   
+Cons   
+- 破坏可读性IOCCC，程序分析(补全); . . .   
+```c
+#define L (
+int main L ) {puts L "Hello, world");}
+```
+# 编译与链接
+## 编译
+一个不带优化的简易(理想)编译器
+- C代码的连续一段总能找到对应的一段连续的机器指令
+	- 这就是为什么大家会觉得C是高级的汇编语言！
+```c
+// a.c
+int foo(int n) {
+	int sum = 0;
+	for (int i = 1; i <= n; i++) {
+		sum += i;
+	}
+	return sum;
+}
+```   
+```bash
+$ gcc -S a.c # compile only
+$ file a.s
+$ gcc -c a.o # assembly only
+$ file a.o
+$ objdump -d a.o > a.o.asm # object code to assembly code
+```
+```c
+// b.c
+int foo(int);
+int main() {
+	printf("sum = %d\n", foo(100));
+}
+```
+```bash
+$ gcc -c b.c # compile and assembly
+$ objdump -d b.o | less # object code to assembly code
+$ gcc a.o b.o -static # static linked file a.o and b.o
+$ ./a.out # run the object file
+```
+
+## 链接
+将多个二进制目标代码拼接在一起
+- C中称为编译单元(compilation unit)
+- 甚至可以链接C++, rust，. . . 代码
+```c++
+// C++
+extern "C" {
+	int foo() { return 0; }
+}
+int bar() { return 0; }
+```
+
+## 加载 : 进入C语言的世界
+
+
 
 # linux shell
 ```bash
