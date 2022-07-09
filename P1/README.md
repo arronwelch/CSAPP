@@ -198,6 +198,7 @@ Pros
 Cons   
 - 破坏可读性IOCCC，程序分析(补全); . . .   
 ```c
+// P1-8
 #define L (
 int main L ) {puts L "Hello, world");}
 ```
@@ -207,7 +208,7 @@ int main L ) {puts L "Hello, world");}
 - C代码的连续一段总能找到对应的一段连续的机器指令
 	- 这就是为什么大家会觉得C是高级的汇编语言！
 ```c
-// a.c
+// P1-9 : a.c
 int foo(int n) {
 	int sum = 0;
 	for (int i = 1; i <= n; i++) {
@@ -224,7 +225,7 @@ $ file a.o
 $ objdump -d a.o > a.o.asm # object code to assembly code
 ```
 ```c
-// b.c
+// P1-9 : b.c
 int foo(int);
 int main() {
 	printf("sum = %d\n", foo(100));
@@ -235,6 +236,7 @@ $ gcc -c b.c # compile and assembly
 $ objdump -d b.o | less # object code to assembly code
 $ gcc a.o b.o -static # static linked file a.o and b.o
 $ ./a.out # run the object file
+$ objdump -d a.out | less #dispaly object file
 ```
 
 ## 链接
@@ -242,27 +244,106 @@ $ ./a.out # run the object file
 - C中称为编译单元(compilation unit)
 - 甚至可以链接C++, rust，. . . 代码
 ```c++
-// C++
-extern "C" {
+// P1-10 : C++
+extern "C" { // compile in C style
 	int foo() { return 0; }
 }
-int bar() { return 0; }
+int bar() { return 0; } // compilr in C++ style
+```
+```bash
+$ g++ -c a.cc # compile only in C++
+$ objdump -d a.o | less
 ```
 
-## 加载 : 进入C语言的世界
+## 加载 : 进入C语言的世界   
+### C程序执行的两个视角   
+---
+**静态**:C代码的连续一段总能对应到一段连续的```机器指令```   
+**动态**:C代码执行的状态总能对应到机器的状态   
+- 源代码视角
+	- 函数、变量、指针···
+- 机器指令视角
+	- 寄存器、内存、地址···   
 
+两个视角的共同之处:内存   
+- 代码、变量(源代码视角) = 地址 + 长度(机器指令视角)
+- (不太严谨地)内存 = 代码 + 数据 + 堆栈
+	- 因此理解C程序执行最重要的就是```内存模型```
 
-
-# linux shell
+### 从main函数开始执行
+---
+标准规定C程序从main开始执行   
+- (思考题 谁调用的main?进程执行的第一条指令是什么?)
+	```c
+	int main(int argc, char *argv[])
+	```
+- argc(argument count) 参数个数
+- argv(argument vector) 参数列表(NULL结束)   
+> 上次课已经演示过
+- ls -al (argc = 2, argv = ["ls", "-al", NULL])
+### main, argc 和 argv
+---
+**一切皆可取地址**
+```c
+// P1-11 : a.c
+int main() {
+	int *p = (int *) 0;
+	*p = 1;
+	printf("Hello, World!\n");
+}
+```
 ```bash
-find . -name "*.c"
-iconv -f gbk -t utf-8 file.txt
-date
-ls -la
-mkdir a.c
-cd ..
-echo string
-which -a echo
-wc -l a.c
-grep int a.c
+$ gcc a.c && ./a.out
+```
+```c
+// P1-12 : a.c
+void printptr(void *p) {
+	printf("p = %p;   *p = %016lx\n", p, *(long *)p);
+}
+int x;
+int main(int argc, char *argv[]) {
+	printptr(main);
+	printptr(&main);
+	printptr(&x);
+	printptr(&argc);
+	printptr(argv);
+	printptr(&argv);
+	printptr(argv[0]);
+}
+```
+```bash
+$ gcc a.c && a.out
+$ cat a.c
+$ objdump -d a.out | less
+```
+### C Type System
+---
+```类型``` : 对一段内存的解读方法
+- 非常“汇编”———没有class, polymorphism,type traits,···   
+- C里所有的数据都可以理解成是地址(指针) + ```类型(对地址的解读)```
+> 例子(是不是感到学了假的C语言)
+```c
+// P1-13 : a.c
+#include <stdio.h>
+#include <assert.h>
+
+int main(int argc, char *argv[]) {
+	int (*f)(int, char *[]) = main;
+	if (argc != 0) {
+		char ***a = &argv, *first = argv[0], ch = argv[0][0];
+		printf("arg = \"%s\"; ch = '%c'\n", first, ch);
+		assert(***a == ch);
+		f(argc - 1, argv + 1);
+	}
+}
+```
+```bash
+$ gcc a.c && ./a.out
+$ ./a.out 1 2 3 4 hello
+arg = "./a.out"; ch = '.'
+arg = "1"; ch = '1'
+arg = "2"; ch = '2'
+arg = "3"; ch = '3'
+arg = "4"; ch = '4'
+arg = "hello"; ch = 'h'
 ```

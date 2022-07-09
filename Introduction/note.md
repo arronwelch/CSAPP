@@ -10,3 +10,4 @@
 - 外部资源
 	- PA习题课(2020秋季学期，蒋炎岩老师):[课程资料](http://jyywiki.cn/ICS/2020/),[B站录播](https://www.bilibili.com/video/BV1qa4y1j7xk/)
 	- 中国大学MOOC的ICS理论课(袁春风老师):[上](https://www.bilibili.com/video/BV1kE411X7S5?t=110.4),[中](https://www.bilibili.com/video/BV1rE41127Re?t=8.3),[下](https://www.bilibili.com/video/BV1jE411874k?t=2.6)
+	- [OS课](http://jyywiki.cn/OS/2021/)(2021春季学期,蒋炎岩老师)
