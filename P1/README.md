@@ -1,3 +1,5 @@
+# C语言拾遗(1):机制
+
 # 编译器到底做了什么？
 1. using vim new **a.c** the simplest c source file   
 	```c
